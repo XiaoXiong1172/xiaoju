@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="fragment_error_msg">出现了异常，加载初始化Fragment</string>
+</resources>
