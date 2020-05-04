@@ -1,6 +1,7 @@
 package com.example.xiaoju.ui.zh;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,7 @@ import com.bumptech.glide.Glide;
 import com.example.xiaoju.R;
 import com.example.xiaoju.db.AppDataCache;
 import com.example.xiaoju.model.DataBean;
+import com.example.xiaoju.ui.WebViewActivity;
 
 
 public class BaseAdapter extends PagedListAdapter<DataBean, BaseAdapter.MyViewHolder> {
@@ -77,6 +79,10 @@ public class BaseAdapter extends PagedListAdapter<DataBean, BaseAdapter.MyViewHo
                     itemView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+                            Intent intent = new Intent(context, WebViewActivity.class);
+                            intent.putExtra("url",dataBean.getUrl());
+                            intent.putExtra("title",dataBean.getDescription());
+                            context.startActivity(intent);
                             Toast.makeText(context, "open chrome with "+dataBean.getUrl(), Toast.LENGTH_SHORT).show();
                         }
                     });

@@ -21,7 +21,14 @@ android {
                 ]
             }
         }
+
+        //sdk中只提供了armeabi的文件夹和对应so文件
+        ndk {
+            abiFilters "armeabi"
+//        , "armeabi-v7a", "x86", "mips"
+        }
     }
+
 
     buildTypes {
         release {
@@ -77,4 +84,5 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:3.8.0'
     def okhttpLoggingInterceptorVersion = "3.9.0"
     implementation "com.squareup.okhttp3:logging-interceptor:$okhttpLoggingInterceptorVersion"
+    implementation files('libs/tbs_sdk_thirdapp_v4.3.0.3_43903_sharewithdownloadwithfile_withoutGame_obfs_20200402_121309.jar')
 }
