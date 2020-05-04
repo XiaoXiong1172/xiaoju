@@ -1,6 +1,7 @@
 package com.example.xiaoju.ui.gj;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,15 @@ import com.bumptech.glide.Glide;
 import com.example.xiaoju.R;
 import com.example.xiaoju.db.AppDataCache;
 import com.example.xiaoju.model.DataBean;
+import com.example.xiaoju.ui.WebViewActivity;
+import com.example.xiaoju.utils.DateUtil;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 
 public class BaseAdapter extends PagedListAdapter<DataBean, BaseAdapter.MyViewHolder> {
@@ -42,7 +52,7 @@ public class BaseAdapter extends PagedListAdapter<DataBean, BaseAdapter.MyViewHo
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.detail,parent,false);
         return new MyViewHolder(view);
     }
 
@@ -55,7 +65,7 @@ public class BaseAdapter extends PagedListAdapter<DataBean, BaseAdapter.MyViewHo
    static class MyViewHolder extends RecyclerView.ViewHolder{
         private TextView title,ctime,desc;
         private ImageView imageView;
-        public MyViewHolder(@NonNull View itemView) {
+        private MyViewHolder(@NonNull View itemView) {
             super(itemView);
              title =   itemView.findViewById(R.id.title);
            ctime =  itemView.findViewById(R.id.ctime);
@@ -63,31 +73,50 @@ public class BaseAdapter extends PagedListAdapter<DataBean, BaseAdapter.MyViewHo
                 imageView = itemView.findViewById(R.id.image);
         }
 
-        public void bind(DataBean dataBean) {
-                if (null ==dataBean){
-                    title.setText("1");
-                    ctime.setText("1");
-                    desc.setText("1");
-                }else {
-                    Log.d("baseadapter", "bind: "+dataBean.toString());
-                    title.setText(dataBean.getTitle());
-                    ctime.setText(dataBean.getCtime());
-                    desc.setText(dataBean.getDescription());
-                    Glide.with(context).load(dataBean.getPicUrl()).into(imageView);
-                    itemView.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Toast.makeText(context, "open chrome with "+dataBean.getUrl(), Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                    itemView.setOnLongClickListener(new View.OnLongClickListener() {
-                        @Override
-                        public boolean onLongClick(View v) {
-                            AppDataCache.getInstance().deleteDataBean(dataBean);
-                            return true;
-                        }
-                    });
-                }
-        }
-    }
+       private void bind(DataBean dataBean) {
+           if (null ==dataBean){
+               title.setText("1");
+               ctime.setText("1");
+               desc.setText("1");
+           }else {
+               Log.d("baseadapter", "bind: "+dataBean.toString());
+               title.setText(dataBean.getTitle());
+                 ctime.setText(translate(dataBean.getCtime()));
+               desc.setText(dataBean.getDescription());
+               Glide.with(context).load(dataBean.getPicUrl()).into(imageView);
+               itemView.setOnClickListener(new View.OnClickListener() {
+                   @Override
+                   public void onClick(View v) {
+                       Intent intent = new Intent(context, WebViewActivity.class);
+                       intent.putExtra("url",dataBean.getUrl());
+                       intent.putExtra("title",dataBean.getDescription());
+                       context.startActivity(intent);
+                       Toast.makeText(context, "open chrome with "+dataBean.getUrl(), Toast.LENGTH_SHORT).show();
+                   }
+               });
+               itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                   @Override
+                   public boolean onLongClick(View v) {
+                       AppDataCache.getInstance().deleteDataBean(dataBean);
+                       return true;
+                   }
+               });
+           }
+       }
+
+       private String translate(String ctext) {
+           Log.d("tag", "translate: "+ctext);
+           Date date = null;
+//           DateFormat format = SimpleDateFormat.getDateInstance();
+           DateFormat format  =  new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
+           try {
+               date =   format.parse(ctext);
+               Log.d("tag", "translate: "+date.getTime());
+           } catch (ParseException e) {
+               e.printStackTrace();
+           }
+           return DateUtil.getTimeFormatText(date);
+       }
+   }
+
 }

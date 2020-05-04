@@ -20,6 +20,14 @@ import com.example.xiaoju.R;
 import com.example.xiaoju.db.AppDataCache;
 import com.example.xiaoju.model.DataBean;
 import com.example.xiaoju.ui.WebViewActivity;
+import com.example.xiaoju.utils.DateUtil;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 
 public class BaseAdapter extends PagedListAdapter<DataBean, BaseAdapter.MyViewHolder> {
@@ -44,7 +52,7 @@ public class BaseAdapter extends PagedListAdapter<DataBean, BaseAdapter.MyViewHo
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.detail,parent,false);
         return new MyViewHolder(view);
     }
 
@@ -57,7 +65,7 @@ public class BaseAdapter extends PagedListAdapter<DataBean, BaseAdapter.MyViewHo
    static class MyViewHolder extends RecyclerView.ViewHolder{
         private TextView title,ctime,desc;
         private ImageView imageView;
-        public MyViewHolder(@NonNull View itemView) {
+        private MyViewHolder(@NonNull View itemView) {
             super(itemView);
              title =   itemView.findViewById(R.id.title);
            ctime =  itemView.findViewById(R.id.ctime);
@@ -65,7 +73,7 @@ public class BaseAdapter extends PagedListAdapter<DataBean, BaseAdapter.MyViewHo
                 imageView = itemView.findViewById(R.id.image);
         }
 
-        public void bind(DataBean dataBean) {
+        private void bind(DataBean dataBean) {
                 if (null ==dataBean){
                     title.setText("1");
                     ctime.setText("1");
@@ -73,7 +81,7 @@ public class BaseAdapter extends PagedListAdapter<DataBean, BaseAdapter.MyViewHo
                 }else {
                     Log.d("baseadapter", "bind: "+dataBean.toString());
                     title.setText(dataBean.getTitle());
-                    ctime.setText(dataBean.getCtime());
+                    ctime.setText(translate(dataBean.getCtime()));
                     desc.setText(dataBean.getDescription());
                     Glide.with(context).load(dataBean.getPicUrl()).into(imageView);
                     itemView.setOnClickListener(new View.OnClickListener() {
@@ -95,5 +103,15 @@ public class BaseAdapter extends PagedListAdapter<DataBean, BaseAdapter.MyViewHo
                     });
                 }
         }
+       private String translate(String ctext) {
+            Date date = null;
+           DateFormat format  =  new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
+           try {
+              date =   format.parse(ctext);
+           } catch (ParseException e) {
+               e.printStackTrace();
+           }
+           return DateUtil.getTimeFormatText(date);
+       }
     }
 }
