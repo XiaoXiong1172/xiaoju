@@ -7,10 +7,13 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.xiaoju.data.AppDataSource;
 import com.example.xiaoju.ui.gj.GuoJiFragment;
+import com.example.xiaoju.ui.mv.MeiNvFragment;
 import com.example.xiaoju.ui.sh.SheHuiFragment;
 import com.example.xiaoju.ui.zh.ZongHeFragment;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -28,10 +31,7 @@ public class MainViewModel extends ViewModel {
     }
 
     private void update(){
-       List<Fragment> temp = new ArrayList<>();
-       temp.add(ZongHeFragment.newInstance(AppDataSource.ZHXW));
-       temp.add(SheHuiFragment.newInstance(AppDataSource.SHXW));
-       temp.add(GuoJiFragment.newInstance(AppDataSource.GJXW));
+       List<Fragment> temp  = Arrays.asList(AppDataSource.FRAGMENTS);
         data.setValue(temp);
     }
 }

@@ -70,6 +70,30 @@ public class AppDataCache {
             case AppDataSource.GJXW:
                 requestFLXW(8,title,callback);
                 break;
+                case AppDataSource.GNXW:
+                requestFLXW(7,title,callback);
+                break;
+                case AppDataSource.MNTP:
+                requestFLXW(11,title,callback);
+                break;
+                case AppDataSource.YLXW:
+                requestFLXW(10,title,callback);
+                break;
+                case AppDataSource.KJXW:
+                requestFLXW(13,title,callback);
+                break;
+                case AppDataSource.LYZX:
+                requestFLXW(18,title,callback);
+                break;
+                case AppDataSource.JSXW:
+                requestFLXW(27,title,callback);
+                break;
+                case AppDataSource.JKZS:
+                requestFLXW(17,title,callback);
+                break;
+                case AppDataSource.HFXW:
+                requestFLXW(38,title,callback);
+                break;
             case AppDataSource.ZHXW:
                 requestZHXW(title,callback);
                 break;

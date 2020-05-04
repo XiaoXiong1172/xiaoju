@@ -97,16 +97,7 @@ public class MainActivity extends AppCompatActivity {
         @Nullable
         @Override
         public CharSequence getPageTitle(int position) {
-            switch (position){
-                case 0:
-                    return AppDataSource.ZHXW;
-                case 1:
-                    return AppDataSource.SHXW;
-                case 2:
-                    return AppDataSource.GJXW;
-                default:
-                   return "";
-            }
+            return AppDataSource.TITLE[position];
         }
         public void setFrag(List<Fragment> frag){
             this.fragments = frag;

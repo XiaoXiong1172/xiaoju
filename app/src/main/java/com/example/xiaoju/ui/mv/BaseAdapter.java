@@ -1,4 +1,4 @@
-package com.example.xiaoju.ui.sh;
+package com.example.xiaoju.ui.mv;
 
 import android.content.Context;
 import android.content.Intent;
@@ -51,7 +51,7 @@ public class BaseAdapter extends PagedListAdapter<DataBean, BaseAdapter.MyViewHo
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.detail,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.detail2,parent,false);
         return new MyViewHolder(view);
     }
 
@@ -62,26 +62,20 @@ public class BaseAdapter extends PagedListAdapter<DataBean, BaseAdapter.MyViewHo
     }
 
    static class MyViewHolder extends RecyclerView.ViewHolder{
-        private TextView title,ctime,desc;
+        private TextView title;
         private ImageView imageView;
         private MyViewHolder(@NonNull View itemView) {
             super(itemView);
              title =   itemView.findViewById(R.id.title);
-           ctime =  itemView.findViewById(R.id.ctime);
-           desc = itemView.findViewById(R.id.desc);
-                imageView = itemView.findViewById(R.id.image);
+                imageView = itemView.findViewById(R.id.imageView);
         }
-
        private void bind(DataBean dataBean) {
            if (null ==dataBean){
                title.setText("1");
-               ctime.setText("1");
-               desc.setText("1");
+
            }else {
                Log.d("baseadapter", "bind: "+dataBean.toString());
                title.setText(dataBean.getTitle());
-               ctime.setText(translate(dataBean.getCtime()));
-               desc.setText(dataBean.getDescription());
                Glide.with(context).load(dataBean.getPicUrl()).into(imageView);
                itemView.setOnClickListener(new View.OnClickListener() {
                    @Override

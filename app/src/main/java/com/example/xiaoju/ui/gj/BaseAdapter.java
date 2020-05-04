@@ -25,7 +25,6 @@ import com.example.xiaoju.utils.DateUtil;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -91,7 +90,6 @@ public class BaseAdapter extends PagedListAdapter<DataBean, BaseAdapter.MyViewHo
                        intent.putExtra("url",dataBean.getUrl());
                        intent.putExtra("title",dataBean.getDescription());
                        context.startActivity(intent);
-                       Toast.makeText(context, "open chrome with "+dataBean.getUrl(), Toast.LENGTH_SHORT).show();
                    }
                });
                itemView.setOnLongClickListener(new View.OnLongClickListener() {

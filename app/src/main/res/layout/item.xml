@@ -12,7 +12,7 @@
         android:layout_marginBottom="18dp"
         android:text="TextView"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/image"
+        app:layout_constraintEnd_toStartOf="@+id/cardview"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/desc" />
 
@@ -36,12 +36,12 @@
         android:layout_marginBottom="9dp"
         android:text="TextView"
         app:layout_constraintBottom_toTopOf="@+id/desc"
-        app:layout_constraintEnd_toStartOf="@+id/image"
+        app:layout_constraintEnd_toStartOf="@+id/cardview"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/image"
+        android:id="@+id/cardview"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="10dp"
